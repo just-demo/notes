@@ -13,6 +13,8 @@ docker build -t test-spring-boot .
 docker run --name test-sb --network=spring_boot_mongo_net -p 8080:8080 test-spring-boot
 
 #############################
+docker logs test-m
+docker logs test-sb
 docker export test-sb > ~/downloads/test-sb.tar
 
 docker stop test-m
@@ -21,3 +23,4 @@ docker rm test-m
 docker stop test-sb
 docker rm test-sb
 docker rmi test-spring-boot
+##############################

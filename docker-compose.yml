@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  spring-boot-service:
+    build: .
+    restart: always
+    container_name: test-sb
+    ports:
+      - 8081:8080
+    working_dir: /opt/app
+    depends_on:
+      - mongo-service
+
+  mongo-service:
+    image: mongo
+    container_name: test-m
+    volumes:
+      - ~/docker-mongo-data:/data/db
+    restart: always
