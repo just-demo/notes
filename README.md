@@ -24,3 +24,4 @@ docker stop test-sb
 docker rm test-sb
 docker rmi test-spring-boot
 ##############################
+http://localhost:8080/ui/index.html
