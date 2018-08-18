@@ -1,4 +1,4 @@
-package self.ed.docker;
+package self.ed.notes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

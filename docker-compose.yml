@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  spring-boot-service:
+  notes-backend:
     build: .
     restart: always
     container_name: test-sb
@@ -9,9 +9,9 @@ services:
       - 8081:8080
     working_dir: /opt/app
     depends_on:
-      - mongo-service
+      - mongo-database
 
-  mongo-service:
+  mongo-database:
     image: mongo
     container_name: test-m
     volumes:
