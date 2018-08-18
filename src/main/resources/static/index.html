@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        th, td {
+            padding-right: 10px;
+            text-align: left;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get('/notes', data => data._embedded.notes.forEach(note => showNote(note)));
+
+            $('#createNote').click(() => $.ajax('/notes', {
+                type: 'POST',
+                data: JSON.stringify({'body': $('#noteBody').val()}),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: note => {
+                    showNote(note);
+                    $('#noteBody').val('');
+                }
+            }));
+
+            function showNote(note) {
+                const row = $('<tr></tr>');
+                const deleteButton = $('<button>Delete</button>').click(() => $.ajax(note._links.self.href, {
+                    type: 'DELETE',
+                    success: () => row.remove()
+                }));
+                $('#notes').append(row
+                    .append($('<td></td>').text(note.createdBy))
+                    .append($('<td></td>').text(note.createdDate))
+                    .append($('<td></td>').text(note.body))
+                    .append($('<td></td>').append(deleteButton)));
+            }
+        });
+    </script>
+</head>
+<body>
+<textarea id="noteBody"></textarea>
+<br/>
+<button id="createNote">Save</button>
+<br/>
+<br/>
+<table id="notes">
+    <tr>
+        <th>Server</th>
+        <th>Date</th>
+        <th>Body</th>
+        <th>&nbsp;</th>
+    </tr>
+</table>
+</body>
+</html>
