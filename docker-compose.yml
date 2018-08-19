@@ -1,17 +1,22 @@
 version: '3.1'
 
 services:
-  notes-backend:
+  backend:
     build: .
     restart: always
+#    To allow scaling exact container name should not specified, container name would be assigned dynamically on deploy.
     container_name: test-sb
     ports:
+#    To allow scaling exported port should not be fixed, but assigned dynamically, it would be changed after redeploy,
+#    and actual port could be found with "docker ps". This is not convenient because client will not know exact port of
+#    each instance, that is why this should be handled with load balancing instead.
+#      - 8080
       - 8081:8080
     working_dir: /opt/app
     depends_on:
-      - mongo-database
+      - database
 
-  mongo-database:
+  database:
     image: mongo
     container_name: test-m
     volumes:
